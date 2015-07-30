@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>general update pattern 1</title>
+    <style>
+    text {
+        font: bold 50px monospace
+    }
+    .enter {fill: green}
+    .update {fill: red}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">general update pattern 1</h2>
+    </div>
+
+
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+
+    var alphabet = 'abcdefghijklmnopqrstuvwxyz'.split(''),
+        width = 960,
+        height = 500
+
+    var svg = d3.select('body').append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(32, ' + (height / 2) + ')')
+
+    function update(data){
+        // data join
+        var text = svg.selectAll('text').data(data)
+
+        // update, update old elements
+        text.attr('class', 'update')
+
+        // enter, create new elements
+        text.enter().append('text')
+            .attr('class', 'enter')
+            .attr('x', function(d, i){
+                return i * 32
+            })
+            .attr('dy', '.35em')
+
+        // enter + update
+        text.text(function(d){
+            return d
+        })
+
+        // exit, remove, remove old elements
+        text.exit().remove()
+    }
+
+    // the initial display
+    update(alphabet)
+
+    // grab a random sample of letters from the alphabet, in alphabetical order
+    setInterval(function(){
+        update(d3.shuffle(alphabet).slice(0, Math.floor(Math.random() * 30)).sort())
+    }, 1500)
+
+    </script>
+</body>
+</html>

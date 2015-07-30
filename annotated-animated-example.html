@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>changing data</title>
+    <style>
+        .text-center{
+            text-align: center;
+            color: #428bca
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="text-center">changing data what </h2>
+
+    <div id="root"></div>
+
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+
+    var root = d3.select('#root')
+
+    var renderData = function(){
+        var numData = Math.floor(5 * Math.random())
+
+        var data = d3.range(numData).map(Math.random)
+
+        var numbers = root.selectAll('div.datum')
+            .data(data).enter().append('div')
+            .attr('class', 'datum')
+
+        numbers.transition()
+            .style('opacity', Number)
+            .text(d3.format('.2f'))
+        numbers.exit()
+            .remove()
+    }
+
+    root.append('button')
+        .text('make it rain data').on('click', renderData)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>animation and transition</title>
+    <style>
+        .svgA {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">animation and transition</h2>
+        <p>其实主要还是使用 .transition().duration().attr().delay() 这四个方法 </p>
+    </div>
+
+    <svg width="800" height="400" id="svgA" class="svgA"></svg>
+    <button id="changeBtn">click to animate</button>
+
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+        var svg = d3.select('#svgA')
+
+        var changeBtn = d3.select('#changeBtn')
+
+        var mySquare = svg.append('rect')
+            .attr('x', 60)
+            .attr('y', 60)
+            .attr('width', 60)
+            .attr('height', 60)
+
+        changeBtn.on('click', function() {
+            // mySquare.transition() // 启动动画
+            //     .ease('elastic') // 设置动态效果
+            //     .attr('x', 400)
+            //     .attr('fill', 'green') // 设置属性
+            //     .style('opacity', 0.5) // 设置样式
+            //     .duration(2500) // 动画时间
+            //     .delay(1000) // 延迟
+
+            // mySquare.transition() // 在执行完上一段动画之后执行下一段动画
+            //     .attr('y', 200)
+            //     .ease('linear')
+            //     .delay(2000) // 错了，必须要设置延迟，不然会同时进行
+
+            // 最好的办法还是用回调函数
+            // d3 用的是 .each('end', function(){})
+            // 这样写可以确保 后面的动画一定在 上一个动画执行完了之后再执行
+            // 可能导致回调地狱？
+            mySquare.transition()
+                .attr('x', 400).duration(1500)
+                .each('end', function() {
+                    d3.select(this)
+                        // .remove() 直接删除这个元素了，不好吧
+                        .transition()
+                        .attr('y', 180)
+                        .attr('fill', '#428bca')
+                        .duration(1500)
+                })
+
+        })
+    </script>
+</body>
+
+</html>

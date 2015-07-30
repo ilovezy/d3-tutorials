@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>three-little-circles</title>
+</head>
+
+<body>
+    <h2 class="text-center">lets yes gogogog</h2>
+    <p>非常常见的操作链<br>
+    selectAll + data + enter + append
+    </p>
+
+    <svg width="720" height="420" style="border: 1px solid black">
+        <circle cx="40" cy="60" r="10"></circle>
+        <circle cx="80" cy="60" r="10"></circle>
+        <circle cx="120" cy="60" r="10"></circle>
+    </svg>
+
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+
+    var circle = d3.selectAll('circle')
+    circle.style('fill', 'steelblue')
+        .attr('r', 30) // r means radius in svg
+
+    // set random clientX
+    circle.attr('cx', function(){
+        return Math.random() * 720
+    })
+
+    // binding data to radius
+    circle.data([32, 44, 112])
+        .attr('r', function(d){
+            return Math.sqrt(d)
+        })
+
+    // set clientX by index
+    circle.attr('cx', function(d, i){
+        return i * 100 + 30
+    })
+    // set clientY by index
+    .attr('cy', function(d, i){
+        return i * 100 + 30
+    })
+
+    // entering elements
+    var svg = d3.select('svg')
+    var circle = svg.selectAll('circle').data([32, 57, 112, 294])
+    var circleEnter = circle.enter().append('circle')
+    // 注意d3.data 数字个数不会覆盖之前已经有的元素，会把多出来的元素进行渲染
+
+    circleEnter.attr('cy', 60)
+    circleEnter.attr('cx', function(d, i){
+        return i * 100 + 30
+    })
+    circleEnter.attr('r', function(d){
+        return Math.sqrt(d)
+    })
+
+    // chain like this, just a way to abbreviating(缩写) code
+    svg.selectAll('circle')
+        .data([32, 57, 112, 294])
+        .enter().append('circle')
+        // 之后是批量处理 circle
+        .attr('cy', 60)
+        .attr('cx', function(d, i){
+            return i * 100 + 30
+        })
+        .attr('r', function(d){
+            return Math.sqrt(d)
+        })
+
+    // exiting elements,
+    // 注意这里，跟元素数值无关，只和个数有关，这里会保留两个数据，移除后面的数据
+    var circle = svg.selectAll('circle')
+        .data([32, 77])
+
+    circle.exit().remove()
+
+    // all together
+    /*
+        1. enter - incoming elements, entering the stage
+        2. update - persistent(保持) elements, staying on stage
+        3. exit - outgoing elements, exiting the stage
+    */
+    var circle = svg.selectAll('circle')
+        .data([32, 57, 299], function(d){
+            return d
+        })
+
+    circle.enter().append('circle')
+        .attr('cy', 60)
+        .attr('cx', function(d, i){
+            return i * 100 + 30
+        })
+        .attr('r', function(d){
+            return Math.sqrt(d)
+        })
+
+    circle.exit().remove()
+
+    </script>
+</body>
+</html>

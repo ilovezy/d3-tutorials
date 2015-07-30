@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>changing data</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h2 class="text-center">changing data</h2>
+
+    <div class='captain'>Kirk</div>
+    <div class='captain'>Picard</div>
+    <div class='captain'>Sisko</div>
+    <div class='captain'>Janeway</div>
+    <div class='captain'>Archer</div>
+
+
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+
+    var captionNames = [
+        'Kirk',
+        'Picard',
+        'Sisko',
+        'Janeway',
+        // I never liked Enterprise.
+        // 'Archer',
+    ]
+
+    // var captions = d3.selectAll('.caption').data(captionNames)
+    // captions.exit()
+    //     .remove()
+
+    // captions.text(String)
+
+    // test something new
+    var captions = d3.selectAll('.caption').data(captionNames)
+    captions.exit()
+        .style('color', 'grey')
+        .text(function(d, i){
+            return 'data: [' + i + '], index: [' + i + ']'
+        })
+    captions.text(String)
+
+
+
+
+    </script>
+</body>
+
+</html>

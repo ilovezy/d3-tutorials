@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>general update pattern 1</title>
+    <style>
+        text {
+            font: bold 50px monospace
+        }
+
+        .enter {
+            fill: green
+        }
+
+        .update {
+            fill: red
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center">general update pattern 1</h2>
+    </div>
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+        var data = {
+            "State": "ND",
+            "Total": 641481,
+            "Under 5 Years": 0.065,
+            "5 to 13 Years": 0.105,
+            "14 to 17 Years": 0.053,
+            "18 to 24 Years": 0.129,
+            "16 Years and Over": 0.804,
+            "18 Years and Over": 0.777,
+            "15 to 44 Years": 0.410,
+            "45 to 64 Years": 0.260,
+            "65 Years and Over": 0.147,
+            "85 Years and Over": 0.028
+        }
+
+        function key(d){
+            return d.Sate
+        }
+
+        var bar = svg.selectAll('.bar')
+            .data(top, function(d){
+                return d.State
+            })
+
+    </script>
+</body>
+
+</html>

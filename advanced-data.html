@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>three-little-circles</title>
+    <style>
+    .thing {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 5px;
+        width: 200px;
+    }
+    .thing.nice {
+        background: #dfd;
+    }
+    .thing.icky {
+        background: #fdd;
+    }
+    .thing .description {
+        margin-left: 1em;
+        color: #666;
+    }
+    .box {
+        width: 80%;
+        border: 1px solid black;
+        padding: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <h2 class="text-center">dearly data'd descendants</h2>
+
+    <div class="chart" id="chart"></div>
+
+    <h2>something depper</h2>
+    <div class="chart box" id="chart-2"></div>
+
+    <h2>data in your data</h2>
+    <div class="chart box" id="chart-3"></div>
+
+    <script src="js/d3-master/d3.min.js"></script>
+    <script>
+
+    var dataset = [
+        {name: 'Sugar', isNice: true, description: 'A tasty, sweet thing.'},
+        {name: 'Spice', isNice: true, description: 'A tasty, savory thing.'},
+        {name: 'Toe Fungus', isNice: false, description: 'A bad tasty, pungent thing.'}
+    ]
+
+    var things = d3.select('#chart').selectAll('div.thing').data(dataset).enter()
+        .append('div')
+        .classed({ // 比 .class 好用，在设置多个 class的时候
+            'thing': true,
+            'nice': function(d){
+                return d.isNice
+            },
+            'icky': function(d){
+                return !d.isNice
+            }
+        })
+        .text(function(d){
+            return d.name
+        })
+
+    things.append('div')
+        .attr('class', 'description')
+        .text(function(d){
+            return d.description
+        })
+
+    // something deeper
+    var nums = [5, 3, 8]
+    var numDivs = d3.select('#chart-2').selectAll('div.num')
+        .data(nums).enter()
+        .append('div')
+        .attr('class', 'num')
+        .text(function(d, i){
+           return '1 First-level! data: ' + d + ', index: ' + i
+        })
+
+    var subNumDivs = numDivs.append('div')
+        .text(function(d, i){
+            return '2 Second-level! data: ' + d + ', index: ' + i
+        })
+
+    var thirdNumDivs = subNumDivs.append('div')
+        .text(function(d, i){
+            return '3 Third-level! data: ' + d + ', index: ' + i
+        })
+
+
+    // data in your data
+    var numsB = [5, 2, 10]
+    var numDivsB = d3.select('#chart-3').selectAll('div.num')
+        .data(numsB).enter().append('div')
+        .attr('class', 'num')
+        .text(function(d, i){
+            return 'First-level! data:' + d + ', index: ' + i
+        })
+
+    var subNumDs = numDivs.append('div').data(42)
+        .text(function(d, i){
+            return ' Second-level! data:' + d + ', index: ' + i
+        })
+
+
+   </script>
+</body>
+
+</html>
